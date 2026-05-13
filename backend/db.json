@@ -1,0 +1,12 @@
+{
+  "postos": [
+    { "id": "1", "nome": "Limpeza" },
+    { "id": "2", "nome": "Organizador (Estoquista)" },
+    { "id": "3", "nome": "Caixa" }
+  ],
+  "funcionarios": [
+    { "id": "1", "nome": "Eduardo", "postoId": "2" },
+    { "id": "2", "nome": "Murilo", "postoId": "1" },
+    { "id": "3", "nome": "Nicolas", "postoId": "3" }
+  ]
+}

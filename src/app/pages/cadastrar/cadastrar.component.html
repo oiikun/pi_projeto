@@ -1,0 +1,67 @@
+<div class="container">
+  <h1 style="color: coral;">Atacadão</h1>
+
+  <!-- TABELA 1: POSTOS -->
+  <section>
+    <h2>Tabela de Postos (Cargos)</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome do Posto</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (posto of postos; track posto.id) {
+          <tr>
+            <td>{{ posto.id }}</td>
+            <td>{{ posto.nome }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <br><hr><br>
+
+  <!-- TABELA 2: FUNCIONÁRIOS -->
+  <section>
+    <h2>Tabela de Funcionários</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome do Funcionário</th>
+          <th>Posto (Cargo)</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (func of funcionarios; track func.id) {
+          <tr>
+            <td>{{ func.id }}</td>
+            <td>{{ func.nome }}</td>
+            <td>{{ func.posto }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+</div>
+<br><hr><br>
+
+<section>
+  <h2>Cadastrar Funcionário</h2>
+
+  <label>Nome:</label><br>
+  <input [(ngModel)]="novoFuncionario.nome" placeholder="Nome do funcionário" /><br><br>
+
+  <label>Posto (Cargo):</label><br>
+  <select [(ngModel)]="novoFuncionario.posto">
+    <option value="">Selecione um posto</option>
+    @for (posto of postos; track posto.id) {
+      <option [value]="posto.nome">{{ posto.nome }}</option>
+    }
+  </select><br><br>
+
+  <button (click)="cadastrar()">Cadastrar</button>
+</section>
