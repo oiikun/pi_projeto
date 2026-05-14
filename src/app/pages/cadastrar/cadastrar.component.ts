@@ -1,38 +1,27 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { FuncionarioService } from '../../services/funcionario.service';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-cadastrar',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, DecimalPipe],
   templateUrl: './cadastrar.component.html',
   styleUrl: './cadastrar.component.css'
 })
 export class CadastrarComponent {
-  postos = [
-    { id: 1, nome: 'Limpeza' },
-    { id: 2, nome: 'Estoquista' },
-    { id: 3, nome: 'Caixa' }
-  ];
+  novoFuncionario = { nome: '', posto: '', polo: '' };
 
-  funcionarios = [
-    { id: 1, nome: 'Eduardo', posto: 'Estoquista' },
-    { id: 2, nome: 'Murilo', posto: 'Limpeza' },
-    { id: 3, nome: 'Nicolas', posto: 'Caixa' }
-  ];
-
-  novoFuncionario = { nome: '', posto: '' };
+  constructor(public funcService: FuncionarioService) {}
 
   cadastrar() {
-    if (!this.novoFuncionario.nome || !this.novoFuncionario.posto) return;
-
-    this.funcionarios.push({
-      id: this.funcionarios.length + 1,
-      nome: this.novoFuncionario.nome,
-      posto: this.novoFuncionario.posto
-    });
-
-    // limpa o formulário
-    this.novoFuncionario = { nome: '', posto: '' };
+    if (!this.novoFuncionario.nome || !this.novoFuncionario.posto || !this.novoFuncionario.polo) return;
+    this.funcService.cadastrar(
+      this.novoFuncionario.nome,
+      this.novoFuncionario.posto,
+      this.novoFuncionario.polo
+    );
+    this.novoFuncionario = { nome: '', posto: '', polo: '' };
   }
 }

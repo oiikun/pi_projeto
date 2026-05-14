@@ -1,0 +1,90 @@
+<div class="container">
+  <h1 style="color: coral;">Atacadão</h1>
+
+  <!-- PESQUISA POR ID DO CARGO -->
+  <section>
+    <h2>Pesquisar por ID do Cargo</h2>
+    <input [(ngModel)]="buscaId" type="number" placeholder="Digite o ID do cargo" />
+
+    @if (funcionarioEncontrado.length > 0) {
+      <table border="1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Posto</th>
+            <th>Polo</th>
+            <th>Salário</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (func of funcionarioEncontrado; track func.id) {
+            <tr>
+              <td>{{ func.id }}</td>
+              <td>{{ func.nome }}</td>
+              <td>{{ func.posto }}</td>
+              <td>{{ func.polo }}</td>
+              <td>R$ {{ func.salario | number:'1.2-2' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else if (buscaId) {
+      <p>Nenhum funcionário encontrado para o cargo com ID {{ buscaId }}.</p>
+    }
+  </section>
+
+  <br><hr><br>
+
+  <!-- TABELA DE POSTOS -->
+  <section>
+    <h2>Tabela de Postos (Cargos)</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome do Posto</th>
+          <th>Salário</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (posto of funcService.postos; track posto.id) {
+          <tr>
+            <td>{{ posto.id }}</td>
+            <td>{{ posto.nome }}</td>
+            <td>R$ {{ posto.salario | number:'1.2-2' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <br><hr><br>
+
+  <!-- TABELA DE FUNCIONÁRIOS -->
+  <section>
+    <h2>Tabela de Funcionários</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Posto</th>
+          <th>Polo</th>
+          <th>Salário</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (func of funcService.funcionarios; track func.id) {
+          <tr>
+            <td>{{ func.id }}</td>
+            <td>{{ func.nome }}</td>
+            <td>{{ func.posto }}</td>
+            <td>{{ func.polo }}</td>
+            <td>R$ {{ func.salario | number:'1.2-2' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+</div>

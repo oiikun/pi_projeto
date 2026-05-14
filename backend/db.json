@@ -1,8 +1,16 @@
 {
   "postos": [
     { "id": "1", "nome": "Limpeza" },
-    { "id": "2", "nome": "Organizador (Estoquista)" },
-    { "id": "3", "nome": "Caixa" }
+    { "id": "2", "nome": "Estoquista" },
+    { "id": "3", "nome": "Caixa" },
+    { "id": "4", "nome": "Gerente" },
+    { "id": "5", "nome": "Padeiro" },
+    { "id": "6", "nome": "Empacotador" },
+    { "id": "7", "nome": "Fiscal de Loja" },
+    { "id": "8", "nome": "Supervisor de Setor" },
+    { "id": "9", "nome": "Auxiliar Administrativo"},
+    { "id": "10", "nome": "Conferente de Loja" }
+     
   ],
   "funcionarios": [
     { "id": "1", "nome": "Eduardo", "postoId": "2" },
