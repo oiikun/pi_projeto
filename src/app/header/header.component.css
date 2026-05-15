@@ -1,20 +1,68 @@
 nav {
   display: flex;
-  gap: 8px;
-  padding: 10px;
-  background-color: coral;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 30px;
+  background: linear-gradient(135deg, coral, #ff5f3c);
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(255, 127, 80, 0.35);
+  margin-bottom: 30px;
 }
 
+/* Links */
 nav a {
-  padding: 8px 16px;
+  position: relative;
+  padding: 12px 22px;
   text-decoration: none;
   color: white;
-  border-radius: 4px;
-  background-color: rgba(0,0,0,0.2);
+  font-weight: 500;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
+/* Efeito hover */
+nav a:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Link ativo */
 nav a.ativo {
-  background-color: white;
+  background: white;
   color: coral;
-  font-weight: bold;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.35);
+}
+
+/* Linha animada */
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 0%;
+  height: 2px;
+  background: white;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+nav a:hover::after {
+  width: 60%;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  nav a {
+    text-align: center;
+  }
 }

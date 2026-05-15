@@ -1,0 +1,156 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fundo da página */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+/* Container principal */
+.container {
+  width: 100%;
+  max-width: 550px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 rgba(255, 255, 255, 0.05);
+  animation: fadeIn 0.7s ease;
+}
+
+/* Título principal */
+.container h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 30px;
+  color: coral;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 0 15px rgba(255, 127, 80, 0.4);
+}
+
+/* Card da seção */
+section {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Subtítulo */
+section h2 {
+  color: #fff;
+  margin-bottom: 25px;
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+/* Labels */
+label {
+  color: #dcdcdc;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+/* Inputs e selects */
+input,
+select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid transparent;
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  margin-bottom: 18px;
+}
+
+/* Placeholder */
+input::placeholder {
+  color: #b9b9b9;
+}
+
+/* Focus */
+input:focus,
+select:focus {
+  border-color: coral;
+  box-shadow: 0 0 12px rgba(255, 127, 80, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Options do select */
+select option {
+  background: #2c2c2c;
+  color: white;
+}
+
+/* Botão */
+button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, coral, #ff5f3c);
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  box-shadow: 0 6px 18px rgba(255, 127, 80, 0.35);
+}
+
+/* Hover do botão */
+button:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 10px 24px rgba(255, 127, 80, 0.5);
+}
+
+/* Clique */
+button:active {
+  transform: scale(0.98);
+}
+
+/* Animação */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .container {
+    padding: 25px;
+  }
+
+  .container h1 {
+    font-size: 2.2rem;
+  }
+
+  section {
+    padding: 20px;
+  }
+}
