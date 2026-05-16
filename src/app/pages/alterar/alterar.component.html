@@ -1,0 +1,132 @@
+<div class="page-header">
+  <h2>EDITAR FUNCIONÁRIO</h2>
+</div>
+
+<div class="card">
+
+  @if (!funcionarioEditando) {
+    <!-- BUSCA -->
+    <div class="abas">
+      <button [class.ativa]="tipoBusca === 'cargo'" (click)="tipoBusca = 'cargo'; buscaId = null; buscaNome = ''">Por ID do Cargo</button>
+      <button [class.ativa]="tipoBusca === 'funcionario'" (click)="tipoBusca = 'funcionario'; buscaId = null; buscaNome = ''">Por ID do Funcionário</button>
+      <button [class.ativa]="tipoBusca === 'nome'" (click)="tipoBusca = 'nome'; buscaId = null; buscaNome = ''">Por Nome</button>
+    </div>
+
+    <div class="campo-grid-2">
+      @if (tipoBusca === 'nome') {
+        <input [(ngModel)]="buscaNome" placeholder="Digite o nome do funcionário" />
+      } @else {
+        <input [(ngModel)]="buscaId" type="number" placeholder="Digite o ID" />
+      }
+    </div>
+
+    @if (resultados.length > 0) {
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Nome</th><th>Posto</th><th>Polo</th><th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (func of resultados; track func.id) {
+              <tr>
+                <td>{{ func.id }}</td>
+                <td>{{ func.nome }}</td>
+                <td>{{ func.posto }}</td>
+                <td>{{ func.polo }}</td>
+                <td><button class="btn-selecionar" (click)="selecionar(func)">Editar</button></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else if (buscaId || buscaNome) {
+      <p class="mensagem">Nenhum funcionário encontrado.</p>
+    }
+  }
+
+  @if (funcionarioEditando) {
+    <!-- ABAS DE EDIÇÃO -->
+    <div class="abas">
+      <button [class.ativa]="abaAtiva === 'geral'" (click)="abaAtiva = 'geral'">Geral</button>
+      <button [class.ativa]="abaAtiva === 'cargo'" (click)="abaAtiva = 'cargo'">Cargo</button>
+      <button [class.ativa]="abaAtiva === 'contatos'" (click)="abaAtiva = 'contatos'">Contatos</button>
+    </div>
+
+    @if (abaAtiva === 'geral') {
+      <div class="aba-conteudo">
+        <div class="campo-full">
+          <label>Nome*</label>
+          <input [(ngModel)]="funcionarioEditando.nome" placeholder="Nome completo" />
+        </div>
+        <div class="campo-grid">
+          <div>
+            <label>CPF</label>
+            <input [(ngModel)]="funcionarioEditando.cpf" placeholder="000.000.000-00" maxlength="14" />
+          </div>
+          <div>
+            <label>RG</label>
+            <input [(ngModel)]="funcionarioEditando.rg" placeholder="00.000.000-0" maxlength="11" />
+          </div>
+          <div>
+            <label>Data Nascimento</label>
+            <input [(ngModel)]="funcionarioEditando.dataNascimento" type="date" />
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (abaAtiva === 'cargo') {
+      <div class="aba-conteudo">
+        <div class="campo-grid">
+          <div>
+            <label>Posto (Cargo)*</label>
+            <select [(ngModel)]="funcionarioEditando.posto" (ngModelChange)="onPostoChange()">
+              @for (posto of funcService.postos; track posto.id) {
+                <option [value]="posto.nome">{{ posto.nome }}</option>
+              }
+            </select>
+          </div>
+          <div>
+            <label>Polo*</label>
+            <select [(ngModel)]="funcionarioEditando.polo">
+              @for (polo of funcService.polos; track polo.id) {
+                <option [value]="polo.nome">{{ polo.nome }}</option>
+              }
+            </select>
+          </div>
+          <div>
+            <label>Salário</label>
+            <input [value]="funcionarioEditando.salario | number:'1.2-2'" disabled />
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (abaAtiva === 'contatos') {
+      <div class="aba-conteudo">
+        <div class="campo-grid">
+          <div>
+            <label>Celular</label>
+            <input [(ngModel)]="funcionarioEditando.celular" placeholder="(00) 00000-0000" maxlength="15" />
+          </div>
+          <div>
+            <label>Email</label>
+            <input [(ngModel)]="funcionarioEditando.email" placeholder="email@exemplo.com" type="email" />
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (mensagem) {
+      <p class="mensagem">{{ mensagem }}</p>
+    }
+
+    <div class="acoes">
+      <button class="btn-salvar" (click)="salvar()">Salvar</button>
+      <button class="btn-novo" (click)="cancelar()">Cancelar</button>
+    </div>
+  }
+
+</div>

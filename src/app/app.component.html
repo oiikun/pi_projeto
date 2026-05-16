@@ -1,3 +1,18 @@
-<app-header></app-header>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="logo">Atacadão</div>
+    <app-header></app-header>
+  </aside>
 
-<router-outlet /> 
+  <div class="direita">
+    <div class="topo">
+      <span></span>
+      <div class="total-topo">
+        Total de funcionários: {{ funcService.funcionarios.length }}
+      </div>
+    </div>
+    <main class="conteudo">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

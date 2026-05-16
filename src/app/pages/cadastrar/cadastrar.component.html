@@ -1,28 +1,88 @@
-<div class="container">
-  <h1 style="color: coral;">Atacadão</h1>
+<div class="page-header">
+  <h2>CADASTRO DE FUNCIONÁRIOS</h2>
+  <div class="total-badge">Total: {{ total }} funcionário(s)</div>
+</div>
 
-  <section>
-    <h2>Cadastrar Funcionário</h2>
+<div class="card">
+  <div class="abas">
+    <button [class.ativa]="abaAtiva === 'geral'" (click)="abaAtiva = 'geral'">Geral</button>
+    <button [class.ativa]="abaAtiva === 'cargo'" (click)="abaAtiva = 'cargo'">Cargo</button>
+    <button [class.ativa]="abaAtiva === 'contatos'" (click)="abaAtiva = 'contatos'">Contatos</button>
+  </div>
 
-    <label>Nome:</label><br>
-    <input [(ngModel)]="novoFuncionario.nome" placeholder="Nome do funcionário" /><br><br>
+  @if (abaAtiva === 'geral') {
+    <div class="aba-conteudo">
+      <div class="campo-full">
+        <label>Nome*</label>
+        <input [(ngModel)]="novoFuncionario.nome" placeholder="Nome completo" />
+      </div>
+      <div class="campo-grid">
+        <div>
+          <label>CPF (000.000.000-00)</label>
+          <input [value]="novoFuncionario.cpf" (input)="mascaraCpf($event)" placeholder="000.000.000-00" maxlength="14" />
+        </div>
+        <div>
+          <label>RG (00.000.000-0)</label>
+          <input [value]="novoFuncionario.rg" (input)="mascaraRg($event)" placeholder="00.000.000-0" maxlength="11" />
+        </div>
+        <div>
+          <label>Data Nascimento</label>
+          <input [(ngModel)]="novoFuncionario.dataNascimento" type="date" />
+        </div>
+      </div>
+    </div>
+  }
 
-    <label>Posto (Cargo):</label><br>
-    <select [(ngModel)]="novoFuncionario.posto">
-      <option value="">Selecione um posto</option>
-      @for (posto of funcService.postos; track posto.id) {
-        <option [value]="posto.nome">{{ posto.nome }} — R$ {{ posto.salario | number:'1.2-2' }}</option>
-      }
-    </select><br><br>
+  @if (abaAtiva === 'cargo') {
+    <div class="aba-conteudo">
+      <div class="campo-grid">
+        <div>
+          <label>Posto (Cargo)*</label>
+          <select [(ngModel)]="novoFuncionario.posto" (ngModelChange)="onPostoChange()">
+            <option value="">Selecione um posto</option>
+            @for (posto of funcService.postos; track posto.id) {
+              <option [value]="posto.nome">{{ posto.nome }}</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label>Polo*</label>
+          <select [(ngModel)]="novoFuncionario.polo">
+            <option value="">Selecione um polo</option>
+            @for (polo of funcService.polos; track polo.id) {
+              <option [value]="polo.nome">{{ polo.nome }}</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label>Salário</label>
+          <input [value]="novoFuncionario.salario | number:'1.2-2'" disabled />
+        </div>
+      </div>
+    </div>
+  }
 
-    <label>Polo:</label><br>
-    <select [(ngModel)]="novoFuncionario.polo">
-      <option value="">Selecione um polo</option>
-      @for (polo of funcService.polos; track polo.id) {
-        <option [value]="polo.nome">{{ polo.nome }}</option>
-      }
-    </select><br><br>
+  @if (abaAtiva === 'contatos') {
+    <div class="aba-conteudo">
+      <div class="campo-grid">
+        <div>
+          <label>Celular (00) 00000-0000</label>
+          <input [value]="novoFuncionario.celular" (input)="mascaraCelular($event)" placeholder="(00) 00000-0000" maxlength="15" />
+        </div>
+        <div>
+          <label>Email</label>
+          <input [(ngModel)]="novoFuncionario.email" placeholder="email@exemplo.com" type="email" />
+        </div>
+      </div>
+    </div>
+  }
 
-    <button (click)="cadastrar()">Cadastrar</button>
-  </section>
+  @if (mensagem) {
+    <p class="mensagem">{{ mensagem }}</p>
+  }
+
+  <div class="acoes">
+    <button class="btn-salvar" (click)="cadastrar()">Salvar</button>
+    <button class="btn-novo" (click)="novoFuncionario = { nome: '', cpf: '', rg: '', dataNascimento: '', posto: '', salario: 0, polo: '', celular: '', email: '' }; mensagem = ''">Novo</button>
+  </div>
 </div>

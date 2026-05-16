@@ -1,51 +1,64 @@
-<div class="container">
-  <h1 style="color: coral;">Atacadão</h1>
+<div class="page-header">
+  <h2>CONSULTAR FUNCIONÁRIOS</h2>
+</div>
 
-  <!-- PESQUISA POR ID DO CARGO -->
-  <section>
-    <h2>Pesquisar por ID do Cargo</h2>
-    <input [(ngModel)]="buscaId" type="number" placeholder="Digite o ID do cargo" />
+<div class="card">
 
-    @if (funcionarioEncontrado.length > 0) {
-      <table border="1">
+  <!-- PESQUISA -->
+  <div class="abas">
+    <button [class.ativa]="tipoBusca === 'cargo'" (click)="tipoBusca = 'cargo'; buscaId = null; buscaNome = ''">Por ID do Cargo</button>
+    <button [class.ativa]="tipoBusca === 'funcionario'" (click)="tipoBusca = 'funcionario'; buscaId = null; buscaNome = ''">Por ID do Funcionário</button>
+    <button [class.ativa]="tipoBusca === 'nome'" (click)="tipoBusca = 'nome'; buscaId = null; buscaNome = ''">Por Nome</button>
+  </div>
+
+  <div class="campo-grid-2">
+    @if (tipoBusca === 'nome') {
+      <input [(ngModel)]="buscaNome" placeholder="Digite o nome do funcionário" />
+    } @else {
+      <input [(ngModel)]="buscaId" type="number" placeholder="Digite o ID" />
+    }
+  </div>
+
+  @if (resultados.length > 0) {
+    <div class="tabela-wrapper">
+      <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Posto</th>
-            <th>Polo</th>
-            <th>Salário</th>
+            <th>ID</th><th>Nome</th><th>CPF</th><th>RG</th>
+            <th>Nascimento</th><th>Posto</th><th>Polo</th>
+            <th>Salário</th><th>Celular</th><th>Email</th>
           </tr>
         </thead>
         <tbody>
-          @for (func of funcionarioEncontrado; track func.id) {
+          @for (func of resultados; track func.id) {
             <tr>
               <td>{{ func.id }}</td>
               <td>{{ func.nome }}</td>
+              <td>{{ func.cpf || '—' }}</td>
+              <td>{{ func.rg || '—' }}</td>
+              <td>{{ func.dataNascimento || '—' }}</td>
               <td>{{ func.posto }}</td>
               <td>{{ func.polo }}</td>
               <td>R$ {{ func.salario | number:'1.2-2' }}</td>
+              <td>{{ func.celular || '—' }}</td>
+              <td>{{ func.email || '—' }}</td>
             </tr>
           }
         </tbody>
       </table>
-    } @else if (buscaId) {
-      <p>Nenhum funcionário encontrado para o cargo com ID {{ buscaId }}.</p>
-    }
-  </section>
+    </div>
+  } @else if (buscaId || buscaNome) {
+    <p class="mensagem">Nenhum funcionário encontrado.</p>
+  }
 
   <br><hr><br>
 
   <!-- TABELA DE POSTOS -->
-  <section>
-    <h2>Tabela de Postos (Cargos)</h2>
-    <table border="1">
+  <h2>Tabela de Postos (Cargos)</h2>
+  <div class="tabela-wrapper">
+    <table>
       <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nome do Posto</th>
-          <th>Salário</th>
-        </tr>
+        <tr><th>ID</th><th>Posto</th><th>Salário</th></tr>
       </thead>
       <tbody>
         @for (posto of funcService.postos; track posto.id) {
@@ -57,21 +70,19 @@
         }
       </tbody>
     </table>
-  </section>
+  </div>
 
   <br><hr><br>
 
   <!-- TABELA DE FUNCIONÁRIOS -->
-  <section>
-    <h2>Tabela de Funcionários</h2>
-    <table border="1">
+  <h2>Tabela de Funcionários</h2>
+  <div class="tabela-wrapper">
+    <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Posto</th>
-          <th>Polo</th>
-          <th>Salário</th>
+          <th>ID</th><th>Nome</th><th>CPF</th><th>RG</th>
+          <th>Nascimento</th><th>Posto</th><th>Polo</th>
+          <th>Salário</th><th>Celular</th><th>Email</th>
         </tr>
       </thead>
       <tbody>
@@ -79,12 +90,18 @@
           <tr>
             <td>{{ func.id }}</td>
             <td>{{ func.nome }}</td>
+            <td>{{ func.cpf || '—' }}</td>
+            <td>{{ func.rg || '—' }}</td>
+            <td>{{ func.dataNascimento || '—' }}</td>
             <td>{{ func.posto }}</td>
             <td>{{ func.polo }}</td>
             <td>R$ {{ func.salario | number:'1.2-2' }}</td>
+            <td>{{ func.celular || '—' }}</td>
+            <td>{{ func.email || '—' }}</td>
           </tr>
         }
       </tbody>
     </table>
-  </section>
+  </div>
+
 </div>
