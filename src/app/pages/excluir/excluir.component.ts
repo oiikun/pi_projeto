@@ -1,24 +1,26 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DecimalPipe } from '@angular/common';
-import { Router } from '@angular/router';
 import { FuncionarioService, Funcionario } from '../../services/funcionario.service';
 
 @Component({
-  selector: 'app-consultar',
+  selector: 'app-excluir',
   standalone: true,
   imports: [FormsModule, DecimalPipe],
-  templateUrl: './consultar.component.html',
-  styleUrl: './consultar.component.css'
+  templateUrl: './excluir.component.html',
+  styleUrl: './excluir.component.css'
 })
-export class ConsultarComponent {
-  tipoBusca = 'cargo';
+export class ExcluirComponent {
+  tipoBusca = 'funcionario';
   buscaId: number | null = null;
   buscaNome = '';
+  mensagem = '';
+  funcionarioParaExcluir: Funcionario | null = null;
 
-  constructor(public funcService: FuncionarioService, private router: Router) {}
+  constructor(public funcService: FuncionarioService) {}
 
   get resultados() {
+    if (this.funcionarioParaExcluir) return [];
     if (this.tipoBusca === 'cargo' && this.buscaId) {
       const posto = this.funcService.postos.find(p => p.id === Number(this.buscaId));
       if (!posto) return [];
@@ -35,14 +37,24 @@ export class ConsultarComponent {
     return [];
   }
 
-  editar(func: Funcionario) {
-    this.funcService.funcionarioSelecionado = { ...func };
-    this.router.navigate(['/alterar']);
+  selecionar(func: Funcionario) {
+    this.funcionarioParaExcluir = { ...func };
+    this.mensagem = '';
   }
 
-  excluir(func: Funcionario) {
-    if (confirm(`Tem certeza que deseja excluir "${func.nome}"?`)) {
-      this.funcService.funcionarios = this.funcService.funcionarios.filter(f => f.id !== func.id);
-    }
+  confirmarExclusao() {
+    if (!this.funcionarioParaExcluir) return;
+    this.funcService.funcionarios = this.funcService.funcionarios.filter(
+      f => f.id !== this.funcionarioParaExcluir!.id
+    );
+    this.mensagem = `Funcionário "${this.funcionarioParaExcluir.nome}" excluído com sucesso!`;
+    this.funcionarioParaExcluir = null;
+    this.buscaId = null;
+    this.buscaNome = '';
+  }
+
+  cancelar() {
+    this.funcionarioParaExcluir = null;
+    this.mensagem = '';
   }
 }

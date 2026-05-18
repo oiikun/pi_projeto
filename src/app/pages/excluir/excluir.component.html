@@ -1,0 +1,81 @@
+<div class="page-header">
+  <h2>EXCLUIR FUNCIONÁRIO</h2>
+</div>
+
+<div class="card">
+
+  @if (!funcionarioParaExcluir) {
+    <div class="abas">
+      <button [class.ativa]="tipoBusca === 'cargo'" (click)="tipoBusca = 'cargo'; buscaId = null; buscaNome = ''">Por ID do Cargo</button>
+      <button [class.ativa]="tipoBusca === 'funcionario'" (click)="tipoBusca = 'funcionario'; buscaId = null; buscaNome = ''">Por ID do Funcionário</button>
+      <button [class.ativa]="tipoBusca === 'nome'" (click)="tipoBusca = 'nome'; buscaId = null; buscaNome = ''">Por Nome</button>
+    </div>
+
+    <div class="campo-grid-2">
+      @if (tipoBusca === 'nome') {
+        <input [(ngModel)]="buscaNome" placeholder="Digite o nome do funcionário" />
+      } @else {
+        <input [(ngModel)]="buscaId" type="number" placeholder="Digite o ID" />
+      }
+    </div>
+
+    @if (resultados.length > 0) {
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Nome</th><th>Posto</th><th>Polo</th><th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (func of resultados; track func.id) {
+              <tr>
+                <td>{{ func.id }}</td>
+                <td>{{ func.nome }}</td>
+                <td>{{ func.posto }}</td>
+                <td>{{ func.polo }}</td>
+                <td><button class="btn-excluir" (click)="selecionar(func)">Excluir</button></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else if (buscaId || buscaNome) {
+      <p class="mensagem">Nenhum funcionário encontrado.</p>
+    }
+  }
+
+  <!-- CONFIRMAÇÃO -->
+  @if (funcionarioParaExcluir) {
+    <div class="confirmacao">
+      <p class="aviso">⚠️ Tem certeza que deseja excluir o funcionário abaixo?</p>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Nome</th><th>Posto</th><th>Polo</th><th>Salário</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ funcionarioParaExcluir.id }}</td>
+              <td>{{ funcionarioParaExcluir.nome }}</td>
+              <td>{{ funcionarioParaExcluir.posto }}</td>
+              <td>{{ funcionarioParaExcluir.polo }}</td>
+              <td>R$ {{ funcionarioParaExcluir.salario | number:'1.2-2' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="acoes">
+        <button class="btn-excluir" (click)="confirmarExclusao()">Confirmar Exclusão</button>
+        <button class="btn-novo" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+  }
+
+  @if (mensagem) {
+    <p class="mensagem-sucesso">{{ mensagem }}</p>
+  }
+
+</div>

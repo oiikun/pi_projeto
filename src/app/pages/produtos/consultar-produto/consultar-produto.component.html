@@ -1,0 +1,85 @@
+<div class="page-header">
+  <h2>CONSULTAR PRODUTOS</h2>
+</div>
+
+<div class="card">
+  <div class="abas">
+    <button [class.ativa]="tipoBusca === 'categoria'" (click)="tipoBusca = 'categoria'; buscaId = null; buscaNome = ''">Por Categoria</button>
+    <button [class.ativa]="tipoBusca === 'id'" (click)="tipoBusca = 'id'; buscaId = null; buscaNome = ''; categoriaSelecionada = ''">Por ID</button>
+    <button [class.ativa]="tipoBusca === 'nome'" (click)="tipoBusca = 'nome'; buscaId = null; buscaNome = ''; categoriaSelecionada = ''">Por Nome</button>
+  </div>
+
+  <div class="campo-grid-2">
+    @if (tipoBusca === 'categoria') {
+      <select [(ngModel)]="categoriaSelecionada">
+        <option value="">Selecione uma categoria</option>
+        @for (cat of produtoService.categorias; track cat.id) {
+          <option [value]="cat.nome">{{ cat.nome }}</option>
+        }
+      </select>
+    } @else if (tipoBusca === 'nome') {
+      <input [(ngModel)]="buscaNome" placeholder="Digite o nome do produto" />
+    } @else {
+      <input [(ngModel)]="buscaId" type="number" placeholder="Digite o ID" />
+    }
+  </div>
+
+  @if (resultados.length > 0) {
+    <div class="tabela-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Nome</th><th>Categoria</th>
+            <th>Preço</th><th>Qtd</th><th>Unidade</th><th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (prod of resultados; track prod.id) {
+            <tr>
+              <td>{{ prod.id }}</td>
+              <td>{{ prod.nome }}</td>
+              <td>{{ prod.categoria }}</td>
+              <td>R$ {{ prod.precoVenda | number:'1.2-2' }}</td>
+              <td>{{ prod.quantidade }}</td>
+              <td>{{ prod.unidade }}</td>
+              <td>
+                <div class="acoes-tabela">
+                  <button class="btn-editar" (click)="editar(prod)">Editar</button>
+                  <button class="btn-excluir" (click)="excluir(prod)">Apagar</button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else if (buscaId || buscaNome || categoriaSelecionada) {
+    <p class="mensagem">Nenhum produto encontrado.</p>
+  }
+
+  <br><hr><br>
+
+  <h2>Todos os Produtos</h2>
+  <div class="tabela-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th><th>Nome</th><th>Categoria</th>
+          <th>Preço</th><th>Qtd</th><th>Unidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (prod of produtoService.produtos; track prod.id) {
+          <tr>
+            <td>{{ prod.id }}</td>
+            <td>{{ prod.nome }}</td>
+            <td>{{ prod.categoria }}</td>
+            <td>R$ {{ prod.precoVenda | number:'1.2-2' }}</td>
+            <td>{{ prod.quantidade }}</td>
+            <td>{{ prod.unidade }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

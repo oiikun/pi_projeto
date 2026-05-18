@@ -1,6 +1,27 @@
 <nav>
-  <a routerLink="/cadastrar" routerLinkActive="ativo">Cadastrar</a>
-  <a routerLink="/consultar" routerLinkActive="ativo">Consultar</a>
-  <a routerLink="/alterar" routerLinkActive="ativo">Editar</a>
-  <a routerLink="/apagar" routerLinkActive="ativo">Apagar</a>
+  <div class="menu-grupo">
+    <button class="menu-pai" (click)="funcionarioAberto = !funcionarioAberto">
+      Funcionário
+      <span class="seta">{{ funcionarioAberto ? '▲' : '▼' }}</span>
+    </button>
+    @if (funcionarioAberto) {
+      <div class="submenu">
+        <a routerLink="/cadastrar" routerLinkActive="ativo" (click)="funcionarioAberto = false">Cadastrar</a>
+        <a routerLink="/consultar" routerLinkActive="ativo" (click)="funcionarioAberto = false">Consultar</a>
+      </div>
+    }
+  </div>
+
+  <div class="menu-grupo">
+    <button class="menu-pai" (click)="produtoAberto = !produtoAberto">
+      Produtos
+      <span class="seta">{{ produtoAberto ? '▲' : '▼' }}</span>
+    </button>
+    @if (produtoAberto) {
+      <div class="submenu">
+        <a routerLink="/produtos/cadastrar" routerLinkActive="ativo" (click)="produtoAberto = false">Cadastrar</a>
+        <a routerLink="/produtos/consultar" routerLinkActive="ativo" (click)="produtoAberto = false">Consultar</a>
+      </div>
+    }
+  </div>
 </nav>

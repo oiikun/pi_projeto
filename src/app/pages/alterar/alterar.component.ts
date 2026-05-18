@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DecimalPipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { FuncionarioService, Funcionario } from '../../services/funcionario.service';
 
 @Component({
@@ -18,7 +19,12 @@ export class AlterarComponent {
   mensagem = '';
   funcionarioEditando: Funcionario | null = null;
 
-  constructor(public funcService: FuncionarioService) {}
+  constructor(public funcService: FuncionarioService, private router: Router) {
+    if (this.funcService.funcionarioSelecionado) {
+      this.funcionarioEditando = { ...this.funcService.funcionarioSelecionado };
+      this.funcService.funcionarioSelecionado = null;
+    }
+  }
 
   get resultados() {
     if (this.funcionarioEditando) return [];
@@ -56,10 +62,10 @@ export class AlterarComponent {
     const index = this.funcService.funcionarios.findIndex(f => f.id === this.funcionarioEditando!.id);
     if (index !== -1) {
       this.funcService.funcionarios[index] = { ...this.funcionarioEditando };
-      this.mensagem = 'Funcionário atualizado com sucesso!';
       this.funcionarioEditando = null;
       this.buscaId = null;
       this.buscaNome = '';
+      this.router.navigate(['/consultar']);
     }
   }
 

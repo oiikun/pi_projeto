@@ -1,0 +1,49 @@
+<div class="page-header">
+  <h2>CADASTRO DE PRODUTOS</h2>
+  <div class="total-badge">Total: {{ total }} produto(s)</div>
+</div>
+
+<div class="card">
+  <div class="campo-full">
+    <label>Nome do Produto*</label>
+    <input [(ngModel)]="novoProduto.nome" placeholder="Nome do produto" />
+  </div>
+
+  <div class="campo-grid">
+    <div>
+      <label>Categoria*</label>
+      <select [(ngModel)]="novoProduto.categoria">
+        <option value="">Selecione uma categoria</option>
+        @for (cat of produtoService.categorias; track cat.id) {
+          <option [value]="cat.nome">{{ cat.nome }}</option>
+        }
+      </select>
+    </div>
+    <div>
+      <label>Unidade de Medida*</label>
+      <select [(ngModel)]="novoProduto.unidade">
+        <option value="">Selecione</option>
+        @for (un of produtoService.unidades; track un) {
+          <option [value]="un">{{ un }}</option>
+        }
+      </select>
+    </div>
+    <div>
+      <label>Preço de Venda (R$)</label>
+      <input [(ngModel)]="novoProduto.precoVenda" type="number" placeholder="0.00" />
+    </div>
+    <div>
+      <label>Quantidade em Estoque</label>
+      <input [(ngModel)]="novoProduto.quantidade" type="number" placeholder="0" />
+    </div>
+  </div>
+
+  @if (mensagem) {
+    <p class="mensagem">{{ mensagem }}</p>
+  }
+
+  <div class="acoes">
+    <button class="btn-salvar" (click)="cadastrar()">Salvar</button>
+    <button class="btn-novo" (click)="novoProduto = { nome: '', categoria: '', precoVenda: 0, quantidade: 0, unidade: '' }; mensagem = ''">Novo</button>
+  </div>
+</div>

@@ -26,7 +26,7 @@
           <tr>
             <th>ID</th><th>Nome</th><th>CPF</th><th>RG</th>
             <th>Nascimento</th><th>Posto</th><th>Polo</th>
-            <th>Salário</th><th>Celular</th><th>Email</th>
+            <th>Salário</th><th>Celular</th><th>Email</th><th>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +42,12 @@
               <td>R$ {{ func.salario | number:'1.2-2' }}</td>
               <td>{{ func.celular || '—' }}</td>
               <td>{{ func.email || '—' }}</td>
+              <td>
+                <div class="acoes-tabela">
+                  <button class="btn-editar" (click)="editar(func)">Editar</button>
+                  <button class="btn-excluir" (click)="excluir(func)">Apagar</button>
+                </div>
+              </td>
             </tr>
           }
         </tbody>

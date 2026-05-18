@@ -49,6 +49,7 @@ export class FuncionarioService {
   { id: 9,  nome: 'Marcos Rocha',     cpf: '901.234.567-89', rg: '90.123.456-7', dataNascimento: '1985-12-03', posto: 'Auxiliar Administrativo',  salario: 2300.00, polo: 'Santo Amaro', celular: '(11) 99012-3456', email: 'marcos.rocha@email.com' },
   { id: 10, nome: 'Patricia Alves',   cpf: '012.345.678-90', rg: '01.234.567-8', dataNascimento: '1994-05-20', posto: 'Conferente de Loja',       salario: 2000.00, polo: 'Interlagos',  celular: '(11) 90123-4567', email: 'patricia.alves@email.com' }
 ];
+ funcionarioSelecionado: Funcionario | null = null;
 
   cadastrar(func: Omit<Funcionario, 'id'>) {
     this.funcionarios.push({
